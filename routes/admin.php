@@ -2,7 +2,7 @@
 use App\Http\Controllers\Admin\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('/{lang}/admin')->middleware('locale')->name('admin.')->group(function () {
 
     Route::middleware('isAdmin')->group(function () {
         Route::view('index', 'admin.index')->name('index');
