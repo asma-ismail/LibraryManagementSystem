@@ -17,8 +17,9 @@ class Localization
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->segments()) {
 
+        if (!$request->segments()) {
+            return redirect("/" . App::getLocale());
         }
         $lang = $request->segments()[0];
         if ($request->segments()) {
