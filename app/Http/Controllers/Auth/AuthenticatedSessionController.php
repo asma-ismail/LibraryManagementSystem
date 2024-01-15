@@ -18,19 +18,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+
         return view('auth.login');
     }
 
+    public function adminCreate(): View
+    {
+
+        return view('admin.login');
+    }
     /**
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-
-        $request->authenticate();
+        $guard = $request->segments()[1] == 'admin' ? 'admin' : 'web';
+        $request->authenticate($guard);
 
         $request->session()->regenerate();
-
+        if ($guard == 'admin') {
+            return redirect()->intended(App::getLocale() . RouteServiceProvider::ADMIN_HOME);
+        }
         return redirect()->intended(App::getLocale() . RouteServiceProvider::HOME);
     }
 
@@ -39,12 +47,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard(Auth::getDefaultDriver())->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
         return redirect('/');
     }
 }

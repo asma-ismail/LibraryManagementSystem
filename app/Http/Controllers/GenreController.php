@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -26,17 +19,8 @@ class GenreController extends Controller
         );
         $genre = new Genre();
         $genre->name = $validated["name"];
-        $genre->save;
-
-        return $genre;
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        $genre->save();
+        return $genre->name;
     }
 
     /**

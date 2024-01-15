@@ -30,4 +30,9 @@ class Membership extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
+    }
 }
