@@ -25,6 +25,8 @@ class RedirectIfAuthenticated
 
             }
             if (Auth::guard($guard)->check()) {
+                // dd(Auth::user()->language);
+
                 return redirect(RouteServiceProvider::HOME);
                 // return redirect('admin.index');
 
