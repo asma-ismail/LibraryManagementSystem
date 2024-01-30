@@ -6,16 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CrudTable extends Component
+class GuestLayout extends Component
 {
     /**
      * Create a new component instance.
      */
-    public $books;
 
-    public function __construct($books)
+    public function __construct()
     {
-        $this->books = $books;
     }
 
     /**
@@ -23,6 +21,6 @@ class CrudTable extends Component
      */
     public function render(): View | Closure | string
     {
-        return view('components.crud-table');
+        return view('layouts.guest');
     }
 }

@@ -46,6 +46,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function authorizeRoles($roles)
+    {
+        if ($this->hasRole($roles)) {
+            return true;
+        }
+        abort(401, 'This action is unauthorized.');
+    }
+
+    public function hasRole($role)
+    {
+        if ($this->membership_id == $role) {
+
+            return true;
+        }
+        return false;
+    }
+
     public function membership(): BelongsTo
     {
         return $this->belongsTo(Membership::class);
@@ -55,7 +72,7 @@ class User extends Authenticatable
      */
     public function books(): BelongsToMany
     {
-        return $this->belongsToMany(Book::class)->as('borrows')
+        return $this->belongsToMany(Book::class)->as('favorites')
             ->withTimestamps();
     }
 

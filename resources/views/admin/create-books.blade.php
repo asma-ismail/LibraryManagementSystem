@@ -1,8 +1,10 @@
 @extends('admin.index')
 @section('content')
+
     <form class="w-1/2 max-w:sm
     mx-auto"
-        action="{{ !$view ? route('admin.books.store') : route('admin.books.update', ["$book->id"]) }}" method="POST">
+        action="{{ !$view ? route('admin.books.store') : route('admin.books.update', ["$book->id"]) }}" method="POST"
+        enctype="multipart/form-data">
         @if ($view)
             @method('PUT')
         @endif
@@ -13,6 +15,15 @@
                 {{ $view ? "Preview Book: $book->id" : 'Add a New Book' }}</h5>
 
             @csrf
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="relative z-0 w-full mb-5 group">
                 <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title </label>
                 <input type="text" name="title" id="title" {{ $view ? "value=$book->title disabled" : '' }}
@@ -76,7 +87,7 @@
                         class="block update-button py-2.5 px-0 view-input w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " />
                     @if ($view)
-                        <img src={{ $book->cover }}>
+                        <img src='/images/{{ $book->cover }}'>
                     @endif
 
                 </div>
@@ -84,11 +95,11 @@
                 <div class="relative z-0 w-full mb-5 group">
                     <label for="file" class="block mb-2 mt-3 text-sm font-medium text-gray-900 dark:text-white">File
                     </label>
-                    <input type="file" name="file" id="file" style="display:{{ $view ? 'none' : '' }}"
+                    <input type="file" name="path" id="file" style="display:{{ $view ? 'none' : '' }}"
                         class="block update-button py-2.5 px-0 view-input w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " />
                     @if ($view)
-                        <a href={{ $book->path }}>View</a>
+                        <a href={{ route('admin.showbook', $book->id) }}>View</a>
                     @endif
 
                 </div>

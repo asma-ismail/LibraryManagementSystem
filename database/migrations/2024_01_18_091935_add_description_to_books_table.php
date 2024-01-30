@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('lang')->default('en');
-
+        Schema::table('books', function (Blueprint $table) {
+            $table->string('description')->default('No description available.');
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('lang');
-
+        Schema::table('books', function (Blueprint $table) {
+            //
         });
     }
 };

@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('lang')->default('en');
-
+        Schema::create('subscribers', function (Blueprint $table) {
+            $table->id();
+            $table->text('email');
+            $table->text('token');
+            $table->text('status');
+            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('lang');
-
-        });
+        Schema::dropIfExists('subscribers');
     }
 };

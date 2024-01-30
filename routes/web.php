@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriberController;
+use App\Models\Book;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,15 +15,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
  */
-Route::resource('books', BookController::class);
+
 Route::get('/', function () {
 
 })->middleware('locale');
 Route::prefix('/{lang}')->middleware('locale')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::post('/subscriber', [SubscriberController::class, 'index'])->name('subscribe');
+    Route::get('/subscriber/verify/{token}/{email}', [SubscriberController::class, 'verify'])->name('subscriber_verify');
 
+    Route::view('/pricing', 'pricing')->name('pricing');
+    Route::view('/contact', 'contactus')->name('contactus');
+
+    Route::get('/', function () {
+        $books = Book::latest()->take(3)->get();
+        return view('welcome', compact('books'));
+    })->name('home');
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified', 'locale'])->name('dashboard');

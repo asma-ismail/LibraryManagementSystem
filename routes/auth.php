@@ -9,9 +9,14 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/{lang}')->middleware(['guest', 'locale'])->group(function () {
+    Route::view('/books', 'book')->name('books');
+    Route::post('/payment/zaincash/check', [PaymentController::class, 'checkPaymentStatus']);
+
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
@@ -33,16 +38,23 @@ Route::prefix('/{lang}')->middleware(['guest', 'locale'])->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
 });
 
 Route::prefix('/{lang}')->middleware(['auth', 'locale'])->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
+    Route::post('/member/book/favorite/{id}', [BookController::class, 'addToFavorites'])->name('user.favorite');
+    Route::post('/member/book/favorite/{id}/remove', [BookController::class, 'removeFromFavorites'])->name('user.favorite.remove');
 
+    Route::get('profile/books', [BookController::class, 'listAllFavouriteBooks'])->name('user.books');
+    Route::get('/member/books', [BookController::class, 'allBooks'])->name('user.allbooks');
+    Route::get('/member/book/{id}', [BookController::class, 'showBook'])->name('user.showbook');
+    Route::get('/member/book/file/{id}', [BookController::class, 'getBook'])->name('user.getbook');
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
         ->middleware(['signed', 'throttle:6,1'])
         ->name('verification.verify');
-
+    Route::post('/payment/zaincash/init', [PaymentController::class, 'createTransactionID'])->name('zain.payment');
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
@@ -56,4 +68,8 @@ Route::prefix('/{lang}')->middleware(['auth', 'locale'])->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('/file/{book}', [BookController::class, 'getBook'])
+        ->name('user.getbook');
+
 });

@@ -34,7 +34,7 @@ class Book extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->as('borrows')
+        return $this->belongsToMany(User::class)->as('favorites')
             ->withTimestamps();
     }
 
@@ -46,5 +46,11 @@ class Book extends Model
     public function membership(): BelongsTo
     {
         return $this->belongsTo(Membership::class);
+    }
+
+    public function isFavotiteBook($uid)
+    {
+        return count($this->users()->wherePivot('user_id', $uid)->get()) == 0 ? false : true;
+
     }
 }
