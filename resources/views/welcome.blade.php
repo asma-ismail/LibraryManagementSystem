@@ -41,7 +41,7 @@
             <div>
                 <img class="rounded-lg bookgrid" src="/images/{{ $book->cover }}" alt="">
                 <a href={{ route('register', [$book->id]) }}
-                    class="text-center font-bold text-lg">{{ $book->title }}</a>
+                    class="text-center font-bold text-lg dark:text-white">{{ $book->title }}</a>
             </div>
         @endforeach
 

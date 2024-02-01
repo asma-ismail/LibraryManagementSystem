@@ -5,7 +5,7 @@
 
 
         <div
-            class="col-start-4   col-span-4 grid grid-cols-10 items-center justify-between  p-8    bg-white border border-gray-200 rounded-lg shadow ">
+            class="col-start-2   col-span-8 grid grid-cols-10 items-center justify-between  p-8 dark:bg-gray-700   bg-white border border-gray-200 rounded-lg shadow ">
 
             <div class="col-start-1 col-span-3">
 
@@ -17,10 +17,10 @@
                     {{ $book->title }}
                 </h5>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $book->description }}</p>
-                <p>Membership: {{ $book->membership->title }}</p>
+                <p class="dark:text-white">Membership: {{ $book->membership->title }}</p>
                 <p>
                     @if (Auth::user()->membership_id >= $book->membership_id)
-                        <a href="{{ route('user.getbook', $book->id) }}">Read</a>
+                        <a href="{{ route('user.getbook', $book->id) }}" class="dark:text-white">Read</a>
                     @else
                         <a href="{{ route('pricing') }}">Upgrade</a>
                     @endif
@@ -31,7 +31,7 @@
                 <form action="{{ route('user.favorite', $book->id) }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="text-white col-start-3 col-span-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="text-white col-start-3 col-span-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="w-4 h-4 text-white-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path
@@ -45,7 +45,7 @@
                 <form action="{{ route('user.favorite.remove', $book->id) }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="text-white col-start-3 col-span-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="text-white col-start-2 col-span-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="w-4 h-4 text-white-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path

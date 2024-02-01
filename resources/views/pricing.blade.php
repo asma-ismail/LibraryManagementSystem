@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen bg-white">
+    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen bg-white dark:bg-gray-900">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Discover Our
             Offers and Prices
         </h2>
